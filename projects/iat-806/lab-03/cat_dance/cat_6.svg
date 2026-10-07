@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges" width="128" height="128">
+  <rect width="32" height="32" fill="none"/>
+  <!-- Floating up 2px -->
+  <path d="M11 5h3v3h-3zM20 5h3v3h-3z" fill="#D35400"/>
+  <path d="M12 6h1v2h-1zM21 6h1v2h-1z" fill="#FADBD8"/>
+  <path d="M12 7h10v6h-10z" fill="#E67E22"/>
+  <path d="M14 9h2v2h-2zM18 9h2v2h-2z" fill="#2C3E50"/>
+  <rect x="16.5" y="11" width="1" height="1" fill="#E74C3C"/>
+  <path d="M13 13h8v8h-8z" fill="#E67E22"/>
+  <path d="M15 14h4v6h-4z" fill="#FADBD8"/>
+  <!-- Both arms up -->
+  <path d="M10 11h3v4h-3zM21 10h3v4h-3z" fill="#D35400"/>
+  <!-- Tail flick left -->
+  <path d="M13 18h-3v-4h-2v-2h2v4h3z" fill="#D35400"/>
+  <!-- Paws tucked in air -->
+  <path d="M13 21h3v3h-3zM18 21h3v3h-3z" fill="#BA4A00"/>
+</svg>
