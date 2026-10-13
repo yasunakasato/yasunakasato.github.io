@@ -4,12 +4,29 @@ let bugY = 200;
 let speedX = 1.5;
 let speedY = 1.2;
 
+// Track whether space is held down
+let isPlayingDead = false;
+
 // 1. ARRAY: Much slower speeds to trigger cat stalking instincts
 let speeds = [-2.5, -1.5, 1.5, 2.5];
 
 function setup() {
   let canvas = createCanvas(800, 600);
   canvas.parent("sketch-holder");
+
+  // Native window listeners ensure space works even if canvas isn't clicked first
+  window.addEventListener("keydown", function (e) {
+    if (e.code === "Space" || e.key === " ") {
+      isPlayingDead = true;
+      e.preventDefault(); // stops page from scrolling down
+    }
+  });
+
+  window.addEventListener("keyup", function (e) {
+    if (e.code === "Space" || e.key === " ") {
+      isPlayingDead = false;
+    }
+  });
 }
 
 function draw() {
@@ -17,17 +34,13 @@ function draw() {
   background(0);
 
   // 2. CONDITIONALS & MOVEMENT:
-  // Move only if the user is NOT holding the SPACE bar
-  // 3. KEYBOARD: keyIsPressed checks if space is held
-  if (keyIsPressed && key === " ") {
-    // Bug freezes and plays dead!
-  } else {
+  // Move only if NOT playing dead
+  if (!isPlayingDead) {
     bugX = bugX + speedX;
     bugY = bugY + speedY;
   }
 
-  // Bounce off left / right edges (gentle, slow bounce angle)
-  // 4. RANDOMNESS: random() changes the vertical bounce angle
+  // Bounce off left / right edges
   if (bugX > width - 70 || bugX < 70) {
     speedX = speedX * -1;
     speedY = random(-1.5, 1.5);
@@ -47,32 +60,30 @@ function draw() {
 function mousePressed() {
   bugX = mouseX;
   bugY = mouseY;
-  speedX = random(speeds); // Picks a slow speed from the array
-  speedY = random(speeds); // Picks a slow speed from the array
+  speedX = random(speeds);
+  speedY = random(speeds);
 }
 
 // Custom function: draws the bug in bright electric blue
-// 7. SEVERAL SHAPES: circle(), rect(), line()
 function drawCockroach(x, y) {
-  // High-contrast electric blue (peak spectrum for feline vision)
   fill(0, 229, 255);
   stroke(0, 229, 255);
 
-  // SHAPE 1: line() for 6 legs
+  // 6 legs
   strokeWeight(5);
-  line(x - 55, y - 35, x + 55, y - 35); // Front legs
-  line(x - 65, y, x + 65, y); // Middle legs
-  line(x - 55, y + 35, x + 55, y + 35); // Back legs
+  line(x - 55, y - 35, x + 55, y - 35);
+  line(x - 65, y, x + 65, y);
+  line(x - 55, y + 35, x + 55, y + 35);
 
   // Antennae
   line(x - 15, y - 60, x - 50, y - 100);
   line(x + 15, y - 60, x + 50, y - 100);
 
-  // SHAPE 2: rect() for the main body
+  // Main body
   rectMode(CENTER);
-  rect(x, y, 60, 100, 20); // Rounded corners
+  rect(x, y, 60, 100, 20);
 
-  // SHAPE 3: circle() for the head
+  // Head
   noStroke();
   circle(x, y - 50, 40);
 }
