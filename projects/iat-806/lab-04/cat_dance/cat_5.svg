@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges" width="128" height="128">
+  <rect width="32" height="32" fill="none"/>
+  <!-- Head tilted right -->
+  <path d="M12 7h3v3h-3zM21 6h3v3h-3z" fill="#D35400"/>
+  <path d="M13 8h1v2h-1zM22 7h1v2h-1z" fill="#FADBD8"/>
+  <path d="M13 8h10v6h-10z" fill="#E67E22"/>
+  <path d="M15 10h2v2h-2zM19 10h2v2h-2z" fill="#2C3E50"/>
+  <rect x="17.5" y="12" width="1" height="1" fill="#E74C3C"/>
+  <!-- Body leaning right -->
+  <path d="M14 14h8v8h-8z" fill="#E67E22"/>
+  <path d="M16 15h4v6h-4z" fill="#FADBD8"/>
+  <!-- Left arm down, right arm up -->
+  <path d="M12 16h2v4h-2z" fill="#D35400"/>
+  <path d="M22 11h3v4h-3z" fill="#D35400"/>
+  <!-- Tail swaying left -->
+  <path d="M14 20h-4v-3h-2v-2h2v3h4z" fill="#D35400"/>
+  <!-- Feet -->
+  <path d="M13 23h3v3h-3zM20 22h3v3h-3z" fill="#BA4A00"/>
+</svg>

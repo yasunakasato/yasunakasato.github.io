@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges" width="128" height="128">
+  <rect width="32" height="32" fill="none"/>
+  <!-- Head slightly lower -->
+  <path d="M10 9h3v3h-3zM19 9h3v3h-3z" fill="#D35400"/>
+  <path d="M11 10h1v2h-1zM20 10h1v2h-1z" fill="#FADBD8"/>
+  <path d="M11 11h10v6h-10z" fill="#E67E22"/>
+  <path d="M13 13h2v2h-2zM17 13h2v2h-2z" fill="#2C3E50"/>
+  <rect x="15.5" y="15" width="1" height="1" fill="#E74C3C"/>
+  <!-- Body squashed -->
+  <path d="M11 17h10v6h-10z" fill="#E67E22"/>
+  <path d="M14 17h4v5h-4z" fill="#FADBD8"/>
+  <!-- Paws tucked to chest -->
+  <path d="M13 18h2v2h-2zM17 18h2v2h-2z" fill="#D35400"/>
+  <!-- Tail curled low -->
+  <path d="M21 21h4v-2h-4z" fill="#D35400"/>
+  <!-- Feet flat out -->
+  <path d="M11 23h4v3h-4zM17 23h4v3h-4z" fill="#BA4A00"/>
+</svg>
