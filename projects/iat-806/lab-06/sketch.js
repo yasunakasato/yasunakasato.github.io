@@ -5,7 +5,9 @@ let segmentation;
 let options = { maskType: "person" };
 
 async function setup() {
-  createCanvas(640, 480);
+  // Create canvas and attach it to the sketch-holder div in index.html
+  let canvas = createCanvas(640, 480);
+  canvas.parent("sketch-holder");
 
   // Create and hide the webcam video feed
   video = createCapture(VIDEO);
@@ -48,14 +50,8 @@ function draw() {
     // Check if the ball is currently clicked by the mouse
     let clicked = b.contains(mouseX, mouseY) && mouseIsPressed;
 
-    // Respond if either the body mask or a mouse click activates it (Bonus requirement)
+    // Respond if either the body mask or a mouse click activates it
     b.respond(onBody || clicked);
     b.update();
   }
-}
-
-// Optional helper for click interactions if needed independently of mouseIsPressed
-function mousePressed() {
-  // Handled inside draw() via mouseIsPressed for smooth toggling,
-  // but you can add specific click logic here if desired.
 }
