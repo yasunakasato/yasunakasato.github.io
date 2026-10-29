@@ -32,10 +32,8 @@ function gotResults(result) {
 function draw() {
   background(240);
 
-  // Optional: Draw the segmentation mask to visualize yourself on screen
-  if (segmentation && segmentation.mask) {
-    image(segmentation.mask, 0, 0);
-  }
+  // Draw the live webcam video feed in the background
+  image(video, 0, 0, width, height);
 
   // Update every ball and check interaction with both body mask and mouse clicks
   for (let i = 0; i < balls.length; i++) {
