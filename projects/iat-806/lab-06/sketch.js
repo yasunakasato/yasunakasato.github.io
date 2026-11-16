@@ -1,55 +1,65 @@
+// an array to put all the balls in.
 let balls = [];
-let video;
+// numBalls is written in camelCase.
+// you could also write in camel_case
+// this is the number of balls that you want to create.
+let numBalls = 3000;
+// no color variables, no position variables, they are all defined within the class.
+
 let bodySegmentation;
+let video;
 let segmentation;
-let options = { maskType: "person" };
+
+let options = {
+  maskType: "person",
+};
 
 async function setup() {
-  // Create canvas and attach it to the sketch-holder div in index.html
-  let canvas = createCanvas(640, 480);
-  canvas.parent("sketch-holder");
+  createCanvas(800, 600);
+  for (let i = 0; i < numBalls; i++) {
+    balls.push(createRandomBall());
+  }
 
-  // Create and hide the webcam video feed
+  bodySegmentation = await ml5.bodySegmentation("SelfieSegmentation", options);
+
+  // Create the video
   video = createCapture(VIDEO);
-  video.size(640, 480);
+  video.size(width, height);
   video.hide();
 
-  // Load the ml5 body segmentation model asynchronously
-  bodySegmentation = await ml5.bodySegmentation("SelfieSegmentation", options);
   bodySegmentation.detectStart(video, gotResults);
-
-  // Populate the array with random balls
-  for (let i = 0; i < 50; i++) {
-    balls.push(Ball.createRandomBall(width, height));
-  }
-}
-
-// Callback function that receives and stores the latest segmentation results
-function gotResults(result) {
-  segmentation = result;
 }
 
 function draw() {
-  background(240);
+  background(0);
+  //image(video, 0, 0);
+  for (let ball of balls) {
+    let onBody = segmentation && ball.isOnBody(segmentation.mask);
 
-  // Draw the live webcam video feed in the background
-  image(video, 0, 0, width, height);
+    let active = ball.contains(mouseX, mouseY) || onBody;
 
-  // Update every ball and check interaction with both body mask and mouse clicks
-  for (let i = 0; i < balls.length; i++) {
-    let b = balls[i];
+    ball.respond(active);
 
-    // Check if the ball is over your body in the webcam view
-    let onBody = false;
-    if (segmentation && segmentation.mask) {
-      onBody = b.isOnBody(segmentation.mask);
-    }
-
-    // Check if the ball is currently clicked by the mouse
-    let clicked = b.contains(mouseX, mouseY) && mouseIsPressed;
-
-    // Respond if either the body mask or a mouse click activates it
-    b.respond(onBody || clicked);
-    b.update();
+    ball.update(1);
   }
+}
+
+function createRandomBall() {
+  let ballX = random(0, width);
+  let ballY = random(0, height);
+  let ballC = color(140, 0, 140 + random(-100, 100), 50);
+  let ballR = 5;
+  let randomNumber = Math.random();
+
+  if (randomNumber < 0.2) {
+    return new BubblyBall(ballX, ballY, ballC, ballR);
+  } else if (randomNumber < 0.5) {
+    return new WeirdBall(ballX, ballY, ballC, ballR);
+  } else {
+    return new Ball(ballX, ballY, ballC, ballR);
+  }
+}
+
+function gotResults(result) {
+  segmentation = result;
 }

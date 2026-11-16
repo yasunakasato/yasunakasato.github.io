@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Letters to Sherry</title>
+    <!-- Load p5.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+    <!-- Load Cozy Handwritten & Serif Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body,
+      html {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        background-color: #000;
+      }
+
+      canvas {
+        display: block;
+      }
+
+      /* Warm, dimmed twilight backdrop */
+      .modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(24, 20, 16, 0.55);
+        backdrop-filter: blur(6px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 10;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.5s ease;
+      }
+
+      .modal-overlay.active {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      /* Cozy Parchment Letter Paper */
+      .letter-paper {
+        background: linear-gradient(180deg, #fbf6ec 0%, #f4ead8 100%);
+        width: 90%;
+        max-width: 520px;
+        border-radius: 6px;
+        padding: 38px 42px;
+        box-shadow:
+          0 25px 60px rgba(0, 0, 0, 0.55),
+          inset 0 0 35px rgba(196, 172, 136, 0.35);
+        border: 1px solid #dfd1b8;
+        color: #3e3226;
+        position: relative;
+        transform: translateY(14px);
+        transition: transform 0.5s ease;
+      }
+
+      .modal-overlay.active .letter-paper {
+        transform: translateY(0);
+      }
+
+      /* Soft poetic reflection whisper instead of a form header */
+      .gentle-prompt {
+        font-style: italic;
+        font-size: 1.25rem;
+        line-height: 1.5;
+        color: #6b5844;
+        margin-bottom: 22px;
+        padding-bottom: 14px;
+        border-bottom: 1px dashed rgba(139, 115, 85, 0.35);
+      }
+
+      .salutation {
+        font-family: "Caveat", cursive;
+        font-size: 1.85rem;
+        color: #4a3a2a;
+        margin-bottom: 6px;
+      }
+
+      /* Ruled stationery lines inside the textarea */
+      textarea {
+        width: 100%;
+        height: 210px;
+        border: none;
+        background: repeating-linear-gradient(
+          transparent,
+          transparent 31px,
+          rgba(139, 115, 85, 0.22) 32px
+        );
+        font-family: "Caveat", cursive;
+        font-size: 1.65rem;
+        line-height: 32px;
+        color: #2f2419;
+        resize: none;
+        padding: 0 4px;
+        margin-bottom: 22px;
+      }
+
+      textarea:focus {
+        outline: none;
+      }
+
+      .btn-row {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+      }
+
+      /* Warm Wax-Seal Inspired Submit Button */
+      .submit-btn {
+        background: #8c4a3c;
+        color: #fdf8f0;
+        border: 1px solid #73392d;
+        padding: 11px 28px;
+        border-radius: 30px;
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.1rem;
+        letter-spacing: 0.5px;
+        cursor: pointer;
+        box-shadow: 0 4px 14px rgba(140, 74, 60, 0.35);
+        transition:
+          background 0.3s ease,
+          transform 0.2s ease;
+      }
+
+      .submit-btn:hover {
+        background: #753b2f;
+        transform: translateY(-1px);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Cozy Letter Paper Modal -->
+    <div class="modal-overlay" id="letterModal">
+      <div class="letter-paper">
+        <p class="gentle-prompt" id="modalQuestion"></p>
+        <div class="salutation">Dear Sherry Mama,</div>
+        <textarea id="letterInput"></textarea>
+        <div class="btn-row">
+          <button class="submit-btn" id="submitBtn">Send</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Your p5.js Sketch -->
+    <script src="sketch.js"></script>
+  </body>
+</html>

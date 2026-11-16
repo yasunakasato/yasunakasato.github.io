@@ -1,75 +1,98 @@
+// this is how we define a class
+// attributes
+// methods
+// this is a blueprint for creating stuff.
+// We can create new balls using this.
 class Ball {
-  // Constructor initializes the ball's position, radius, and color properties
-  constructor(x, y, r) {
+  // this function is called when an instance of Ball is created.
+  // x ix x position
+  // y is y position
+  // c is color
+  // r is radius
+  // this is the function that is called when you create a new ball or a new instance of this Class.
+  constructor(x, y, fillColor, r) {
     this.x = x;
     this.y = y;
+
+    this.baseR = r;
     this.r = r;
-    this.color = color(random(100, 255), random(100, 255), random(100, 255));
-    this.originalColor = this.color;
-    this.highlightColor = color(255, 50, 100); // Bright color when active
+    this.origColor = fillColor;
+    this.fillColor = fillColor;
+    this.highlightColor = color(100, 100, 100, 50);
   }
 
-  // Jitters the ball position slightly by adding random offsets
-  move() {
-    this.x += random(-2, 2);
-    this.y += random(-2, 2);
-  }
-
-  // Pulsates the ball's radius slightly back and forth
-  changeSize() {
-    this.r += random(-0.5, 0.5);
-    this.r = constrain(this.r, 10, 40);
-  }
-
-  // Renders the ball onto the canvas using its current color and radius
-  show() {
-    noStroke();
-    fill(this.color);
-    ellipse(this.x, this.y, this.r * 2);
-  }
-
-  // Updates the ball state by calling movement, size adjustment, and display methods
-  update() {
-    this.move();
-    this.changeSize();
+  update(byHowMuch) {
+    this.move(byHowMuch);
     this.show();
   }
-
-  // Factory method that generates and returns a new Ball with random coordinates
-  static createRandomBall(w, h) {
-    return new Ball(random(w), random(h), random(15, 30));
+  move(byHowMuch) {
+    this.x += random(-byHowMuch, byHowMuch);
+    this.y += random(-byHowMuch, byHowMuch);
   }
 
-  // Changes the ball's color to the highlight color when active
-  highlight() {
-    this.color = this.highlightColor;
+  changeSize(byHowMuch) {
+    this.r = constrain(this.r + random(-byHowMuch, byHowMuch), 2, 30);
   }
 
-  // Reverts the ball's color back to its original color when inactive
-  deHighlight() {
-    this.color = this.originalColor;
-  }
-
-  // Switches between highlight and normal state depending on the active boolean parameter
-  respond(active) {
-    if (active) {
-      this.highlight();
+  contains(px, py) {
+    if (dist(this.x, this.y, px, py) < this.r) {
+      return true;
     } else {
-      this.deHighlight();
+      return false;
     }
   }
 
-  // Determines whether a given coordinate (px, py) falls inside the bounds of the ball
-  contains(px, py) {
-    let d = dist(px, py, this.x, this.y);
-    return d < this.r;
+  respond(active) {
+    if (active) this.highlight();
+    else this.deHighlight();
   }
 
-  // Checks if the ball's location overlaps with the person mask from the webcam segmentation
+  highlight() {
+    this.fillColor = this.highlightColor;
+  }
+
+  deHighlight() {
+    this.fillColor = this.origColor;
+  }
+
   isOnBody(mask) {
-    if (!mask) return false;
-    let val = mask.get(Math.floor(this.x), Math.floor(this.y));
-    // If the alpha channel value is greater than 128, the ball is over the person
-    return val[3] > 128;
+    let px = mask.get(floor(this.x), floor(this.y)); // [r, g, b, a]
+    return px[3] < 128; // opaque = body
+  }
+
+  show() {
+    fill(this.fillColor);
+    noStroke();
+    circle(this.x, this.y, this.r * 2);
+  }
+}
+
+class BubblyBall extends Ball {
+  respond(active) {
+    super.respond(active); /// whatever my super, my parent does, do it exactly
+    /// now we can do, update it
+    this.changeSize(5);
+  }
+}
+
+class WeirdBall extends Ball {
+  constructor(x, y, fillColor, r) {
+    super(x, y, fillColor, r);
+    this.emojiText = ":woozy_face:";
+    this.sizeMultiplier = 5;
+  }
+
+  respond(active) {
+    if (active) {
+      this.sizeMultiplier = 5;
+    } else {
+      this.sizeMultiplier = 1;
+    }
+  }
+
+  show() {
+    textSize(this.r * this.sizeMultiplier);
+    noStroke();
+    text(this.emojiText, this.x, this.y);
   }
 }
