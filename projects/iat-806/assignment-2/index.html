@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Letters to Sherry</title>
+    <title>Assignment 02 — Letters to Sherry</title>
     <!-- Load p5.js Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
     <!-- Load Cozy Handwritten & Serif Fonts -->
@@ -31,6 +31,33 @@
         display: block;
       }
 
+      /* Floating About Button in Top Right */
+      .about-trigger {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 9;
+        background: rgba(251, 246, 236, 0.92);
+        color: #3e3226;
+        border: 1px solid #dfd1b8;
+        padding: 9px 20px;
+        border-radius: 30px;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.05rem;
+        font-weight: 600;
+        letter-spacing: 0.4px;
+        cursor: pointer;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+        transition:
+          background 0.25s ease,
+          transform 0.2s ease;
+      }
+
+      .about-trigger:hover {
+        background: #fbf6ec;
+        transform: translateY(-1px);
+      }
+
       /* Warm, dimmed twilight backdrop */
       .modal-overlay {
         position: fixed;
@@ -56,8 +83,10 @@
         background: linear-gradient(180deg, #fbf6ec 0%, #f4ead8 100%);
         width: 90%;
         max-width: 520px;
+        max-height: 88vh;
+        overflow-y: auto;
         border-radius: 6px;
-        padding: 38px 42px;
+        padding: 32px 38px;
         box-shadow:
           0 25px 60px rgba(0, 0, 0, 0.55),
           inset 0 0 35px rgba(196, 172, 136, 0.35);
@@ -70,6 +99,34 @@
 
       .modal-overlay.active .letter-paper {
         transform: translateY(0);
+      }
+
+      /* About Modal Photo & Typography */
+      .about-title {
+        font-size: 1.6rem;
+        font-weight: 600;
+        color: #3e3226;
+        margin-bottom: 14px;
+        padding-bottom: 10px;
+        border-bottom: 1px dashed rgba(139, 115, 85, 0.35);
+      }
+
+      .about-photo {
+        display: block;
+        width: 100%;
+        max-height: 360px;
+        object-fit: contain;
+        background-color: rgba(62, 50, 38, 0.06);
+        border-radius: 4px;
+        border: 1px solid #dfd1b8;
+        margin-bottom: 16px;
+      }
+
+      .about-text {
+        font-size: 1.15rem;
+        line-height: 1.6;
+        color: #4a3a2a;
+        margin-bottom: 22px;
       }
 
       /* Soft poetic reflection whisper instead of a form header */
@@ -143,6 +200,34 @@
     </style>
   </head>
   <body>
+    <!-- Button to Open Project Explanation -->
+    <button class="about-trigger" id="aboutBtn">About This Game</button>
+
+    <!-- About / Project Explanation Modal -->
+    <div class="modal-overlay" id="aboutModal">
+      <div class="letter-paper">
+        <h1 class="about-title">Assignment 02 — Letters to Sherry</h1>
+        <img
+          src="Sherry.jpg"
+          alt="Sherry Copeland memorial"
+          class="about-photo"
+        />
+        <p class="about-text">
+          Sherry Copeland passed away on November 10, 2026. I’m dedicating this
+          project to everyone whose life she touched. Move your body and head in
+          front of the webcam to reach each floating bubble—representing Denial,
+          Anger, Bargaining, Depression, and Acceptance—where you can write a
+          letter to Sherry and click "Send." Once you've completed all five
+          stages, Sherry will depart, carrying your letters with her. I
+          photoshoped Sherry's photo like a ghost. Her background is the
+          Bluegrass State, Kentucky.
+        </p>
+        <div class="btn-row">
+          <button class="submit-btn" id="closeAboutBtn">Close</button>
+        </div>
+      </div>
+    </div>
+
     <!-- Cozy Letter Paper Modal -->
     <div class="modal-overlay" id="letterModal">
       <div class="letter-paper">
@@ -154,6 +239,27 @@
         </div>
       </div>
     </div>
+
+    <!-- Popup Toggle Logic -->
+    <script>
+      const aboutBtn = document.getElementById("aboutBtn");
+      const aboutModal = document.getElementById("aboutModal");
+      const closeAboutBtn = document.getElementById("closeAboutBtn");
+
+      aboutBtn.addEventListener("click", () => {
+        aboutModal.classList.add("active");
+      });
+
+      closeAboutBtn.addEventListener("click", () => {
+        aboutModal.classList.remove("active");
+      });
+
+      aboutModal.addEventListener("click", (e) => {
+        if (e.target === aboutModal) {
+          aboutModal.classList.remove("active");
+        }
+      });
+    </script>
 
     <!-- Your p5.js Sketch -->
     <script src="sketch.js"></script>
